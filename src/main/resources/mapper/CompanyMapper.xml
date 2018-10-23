@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ching.dao.CompanyMapper">
+
+<insert id="addPerson" parameterType="com.ching.entity.Company">
+insert into logcom values (#{id},#{name},#{city},#{phone},#{fax},#{address},#{remark})
+</insert>
+
+<delete id="deletperson" parameterType="String">
+DELETE FROM logcom WHERE id =#{id}
+</delete>
+
+<update id="updatePerson" parameterType="com.ching.entity.Company">
+UPDATE logcom SET name=#{name}, city=#{city} ,phone=#{phone} ,fax=#{fax} , address=#{address} ,remark=#{remark} WHERE id =#{id} 
+</update>
+
+<select id="findPersonAll" resultType="com.ching.entity.Company">
+select * from logcom
+</select>
+
+<select id="findpPersonId" resultType="com.ching.entity.Company" parameterType="String">
+select * from logcom where id=#{id}
+</select>
+
+<select id="findPersonmohu" resultType="com.ching.entity.Company" parameterType="com.ching.entity.Company" >
+ select * from logcom where name like concat('%',#{name},'%')
+<!-- select * from person where name like '%${name}%'  -->
+</select>
+
+<select id="findPersonPage" resultType="com.ching.entity.Company" parameterType="map">
+select * from logcom limit #{current},#{size}
+</select>
+
+<select id="findPersonPagemohu" resultType="com.ching.entity.Company" parameterType="map">
+select * from logcom where name like concat('%',#{name},'%')  limit #{current},#{size}
+</select>
+<select id="findCountPage" resultType="int" >
+select count(*) from logcom
+</select>
+
+<delete id="deletall" parameterType="map">
+delete from logcom where id in
+<foreach collection="asd" item="v" open="(" close=")" separator=",">
+#{v}
+</foreach>
+</delete>
+
+</mapper>
